@@ -1,4 +1,4 @@
-FROM alpine:3.7 AS iconv
+FROM alpine:latest 
 
 RUN apk add --no-cache curl g++ make
 RUN curl -SL http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz | tar -xz
@@ -23,8 +23,8 @@ ARG VIM_ENABLE_LUA="${VIM_ENABLE_ALL}"
 ARG VIM_ENABLE_TCL="${VIM_ENABLE_ALL}"
 ARG LUA_VERSION="5.3"
 
-COPY --from=iconv /usr/local/include /usr/local/include/
-COPY --from=iconv /usr/local/lib /usr/local/lib/
+#COPY --from=iconv /usr/local/include /usr/local/include/
+#COPY --from=iconv /usr/local/lib /usr/local/lib/
 
 RUN apk add --no-cache --virtual .build \
         git \
