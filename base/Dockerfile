@@ -1,16 +1,12 @@
 FROM alpine:latest 
 
+RUN adduser -D vim
 RUN apk add --no-cache curl g++ make
 RUN curl -SL http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz | tar -xz
 WORKDIR libiconv-1.15
 RUN ./configure
 RUN make
 RUN make install
-
-
-FROM alpine:3.7
-
-LABEL maintainer="thinca <thinca+vim@gmail.com>"
 
 ARG VIM_VERSION=master
 ARG VIM_ENABLE_ALL=""
@@ -77,6 +73,8 @@ RUN apk add --no-cache --virtual .build \
 
 COPY vimrc /usr/local/share/vim/vimrc
 
-WORKDIR /root
+USER vim
+
+WORKDIR /home/vim
 
 ENTRYPOINT ["/usr/local/bin/vim"]
